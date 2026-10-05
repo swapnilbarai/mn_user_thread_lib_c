@@ -1,0 +1,92 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 23,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "debug",
+            "displayName": "Debug",
+            "generator": "Unix Makefiles",
+            "binaryDir": "${sourceDir}/build/debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_ASM_COMPILER": "gcc",
+                "CMAKE_C_FLAGS": "-Wall -Wextra -Wpedantic -g -O0",
+                "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -g -O0"
+            }
+        },
+        {
+            "name": "release",
+            "displayName": "Release",
+            "generator": "Unix Makefiles",
+            "binaryDir": "${sourceDir}/build/release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++",
+                "CMAKE_ASM_COMPILER": "gcc",
+                "CMAKE_C_FLAGS": "-Wall -Wextra -Wpedantic -O2",
+                "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -O2"
+            }
+        },
+        {
+            "name": "mn_uthread",
+            "displayName": "mn_uthread (Debug)",
+            "description": "Custom debug build preset for mn_uthread",
+            "inherits": [
+                "debug"
+            ]
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "debug",
+            "configurePreset": "debug",
+            "jobs": 8
+        },
+        {
+            "name": "release",
+            "configurePreset": "release",
+            "jobs": 8
+        },
+        {
+            "name": "mn_uthread",
+            "displayName": "mn_uthread Build (Debug)",
+            "description": "Custom build preset targeting the mn_uthread configure preset",
+            "inherits": [
+                "debug"
+            ],
+            "configurePreset": "mn_uthread"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "debug",
+            "configurePreset": "debug",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "release",
+            "configurePreset": "release",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "mn_uthread",
+            "displayName": "mn_uthread Tests (Debug)",
+            "description": "Custom test preset targeting the mn_uthread configure preset",
+            "inherits": [
+                "debug"
+            ],
+            "configurePreset": "mn_uthread"
+        }
+    ]
+}
